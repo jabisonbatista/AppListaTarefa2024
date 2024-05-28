@@ -11,6 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ir ao mercado"
+        android:textColor="#000000"
+
+        android:textColorHighlight="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textData"
@@ -23,6 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20/10/2022"
+        android:textColor="#000000"
+        android:textColorHighlight="#000000"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,24 +54,5 @@
         app:layout_constraintEnd_toStartOf="@+id/btnExcluir"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_editar_24" />
-
-    <CheckBox
-        android:id="@+id/checkBoxItem_tarefa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="236dp"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditar"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="101dp" />
-
-    <TextView
-        android:id="@+id/txtResultadoItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:hint="resultado"
-        app:layout_constraintBottom_toBottomOf="@+id/checkBoxItem_tarefa"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxItem_tarefa"
-        app:layout_constraintTop_toBottomOf="@+id/textData" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
