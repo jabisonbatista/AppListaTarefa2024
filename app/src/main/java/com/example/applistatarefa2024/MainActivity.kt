@@ -3,7 +3,10 @@ package com.example.applistatarefa2024
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.CompoundButton
+import android.widget.TextView
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
@@ -14,15 +17,20 @@ import com.example.applistatarefa2024.databinding.ActivityMainBinding
 import com.example.applistatarefa2024.model.Tarefa
 
 class MainActivity : AppCompatActivity() {
+
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     private var listaTarefas = emptyList<Tarefa>()
     private var tarefaAdapter: TarefaAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+
 
         binding.fabAdicionar.setOnClickListener {
             val intent = Intent(this, AdicionarTarefaActivity::class.java)

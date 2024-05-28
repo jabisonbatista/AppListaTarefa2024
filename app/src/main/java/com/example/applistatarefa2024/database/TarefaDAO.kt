@@ -87,7 +87,7 @@ class TarefaDAO(context: Context) : ITarefaDAO {
         val indiceData = cursor.getColumnIndex( DatabaseHelper.COLUNA_DATA_CADASTRO )
 
         while ( cursor.moveToNext() ){
-
+            //val checkBox = cursor.getInt(checkBox)
             val idTarefa = cursor.getInt( indiceId )
             val descricao = cursor.getString( indiceDescricao )
             val data = cursor.getString( indiceData )

@@ -17,6 +17,15 @@ class AdicionarTarefaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        with(binding){
+            btnSalvar.setOnClickListener {
+
+            }
+            //checkBox()
+
+        }
+
+
         //recuperar tarefa passada
         var tarefa: Tarefa? = null
         val bundle = intent.extras
@@ -36,6 +45,7 @@ class AdicionarTarefaActivity : AppCompatActivity() {
                         editar(tarefa)
                 }else{
                     salvar()
+                    checkBox()
                 }
 
             }else{
@@ -50,10 +60,19 @@ class AdicionarTarefaActivity : AppCompatActivity() {
 
     }
 
+    private fun checkBox() {
+        val selecionadoBaixo = binding.checkBaixo.isChecked
+        binding.checkBaixo.text = "prioridade baixa $selecionadoBaixo"
+
+    }
+
     private fun editar(tarefa: Tarefa) {
         val descricao = binding.editTarefa.text.toString()
-        val tarefaAtualizar = Tarefa(tarefa.idTarefa, descricao, "default"
-        )
+        //val checkBox = binding.txtResultado.text.toString()
+        val tarefaAtualizar = Tarefa(
+            tarefa.idTarefa,
+            descricao,
+            "default")
         val tarefaDAO = TarefaDAO(this)
 
         if( tarefaDAO.atualizar(tarefaAtualizar)){
@@ -69,9 +88,12 @@ class AdicionarTarefaActivity : AppCompatActivity() {
 
     private fun salvar() {
         val descricao = binding.editTarefa.text.toString()
+        //val checkBox = binding.txtResultado.text.toString()
+
         val tarefa = Tarefa(
             -1, descricao, "default"
         )
+
 
         val tarefaDAO = TarefaDAO(this)
         if (tarefaDAO.salvar(tarefa)) {

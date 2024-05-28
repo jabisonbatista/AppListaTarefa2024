@@ -17,6 +17,7 @@ class  DatabaseHelper(context: Context): SQLiteOpenHelper(
         const val COLUNA_DATA_CADASTRO = "data_cadastro"
 
 
+
     }
     //vamos criar as tabelas
     override fun onCreate(db: SQLiteDatabase?) {
