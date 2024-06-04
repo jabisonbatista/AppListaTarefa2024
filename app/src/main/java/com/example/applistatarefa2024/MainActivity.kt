@@ -1,7 +1,9 @@
 package com.example.applistatarefa2024
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
@@ -21,15 +23,12 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
     private var listaTarefas = emptyList<Tarefa>()
     private var tarefaAdapter: TarefaAdapter? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
 
 
         binding.fabAdicionar.setOnClickListener {
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         alertBuilder.setPositiveButton("sim"){_,_ ->
 
             val tarefaDAO = TarefaDAO(this)
-           if(tarefaDAO.remover(id)){
+           if(tarefaDAO.removerPorId(id)){
                atualizarListaTarefas()
                Toast.makeText(this,"Sucesso ao remover tarefa", Toast.LENGTH_LONG).show()
 

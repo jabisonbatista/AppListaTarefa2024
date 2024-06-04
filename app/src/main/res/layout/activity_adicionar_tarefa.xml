@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".activity.AdicionarTarefaActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/imgfundo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -32,27 +44,16 @@
         app:layout_constraintTop_toBottomOf="@+id/editTarefa" />
 
 
-    <TextView
-        android:id="@+id/niveldePrioridade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-
-        android:text="Nivel de Prioridade"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
-
     <EditText
         android:id="@+id/editTarefa"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:textSize="20sp"
         android:ems="10"
         android:hint="Digite uma tarefa"
+        android:maxLines= "3"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,36 +62,66 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <CheckBox
-        android:id="@+id/checkMedio"
+        android:id="@+id/checkBoxMedio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:buttonTint="@android:color/holo_orange_light"
-        android:text="MÉDIO"
-        app:layout_constraintEnd_toStartOf="@+id/checkAlto"
-        app:layout_constraintStart_toEndOf="@+id/checkBaixo"
-        app:layout_constraintTop_toBottomOf="@+id/niveldePrioridade" />
-
-    <CheckBox
-        android:id="@+id/checkBaixo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:buttonTint="@color/teal_700"
-        android:text="BAIXO"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="16dp"
+        android:background="#FFE500"
+        android:backgroundTint="#FEE401"
+        android:shadowColor="#FFE500"
+        android:text="Médio"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxAlto"
+        app:layout_constraintHorizontal_bias="0.884"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/niveldePrioridade" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
 
     <CheckBox
-        android:id="@+id/checkAlto"
+        android:id="@+id/checkBoxBaixo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:buttonTint="@color/design_default_color_error"
-        android:text="ALTO"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="56dp"
+        android:background="#06EB10"
+        android:checked="false"
+        android:shadowColor="#00FF0A"
+        android:text="Baixo"
+        android:textColor="#000000"
+        android:textColorHighlight="#89FF00"
+        android:textColorHint="#89FF00"
+        app:layout_constraintEnd_toStartOf="@+id/checkBoxMedio"
+        app:layout_constraintHorizontal_bias="0.584"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
+
+    <CheckBox
+        android:id="@+id/checkBoxAlto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="24dp"
+        android:background="#FF0000"
+        android:backgroundTint="#FF0000"
+        android:shadowColor="#FF0000"
+        android:text="Alto"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/niveldePrioridade" />
+        app:layout_constraintHorizontal_bias="0.848"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Nivel de Prioridade"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalvar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.applistatarefa2024.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
@@ -12,7 +13,8 @@ class TarefaDAO(context: Context) : ITarefaDAO {
     override fun salvar(tarefa: Tarefa): Boolean {
 
         val conteudos = ContentValues()
-        conteudos.put("${DatabaseHelper.COLUNA_DESCRICAO}", tarefa.descricao)
+        conteudos.put(DatabaseHelper.COLUNA_DESCRICAO, tarefa.descricao)
+        conteudos.put(DatabaseHelper.COLUNA_PRIORIDADE, tarefa.prioridade)
 
         try {
             escrita.insert(
@@ -30,11 +32,10 @@ class TarefaDAO(context: Context) : ITarefaDAO {
         return true
 
     }
-
     override fun atualizar(tarefa: Tarefa): Boolean {
         val args = arrayOf(tarefa.idTarefa.toString())
         val conteudo = ContentValues()
-        conteudo.put("${DatabaseHelper.COLUNA_DESCRICAO}", tarefa.descricao)
+        conteudo.put("${DatabaseHelper.COLUNA_DESCRICAO}, ${DatabaseHelper.COLUNA_PRIORIDADE}", tarefa.descricao )
 
         try {
             escrita.update(
@@ -48,12 +49,10 @@ class TarefaDAO(context: Context) : ITarefaDAO {
             Log.i("info_db", "Erro ao Remover")
             return false
         }
+
         return true
-
     }
-
-
-    override fun remover(idTarefa: Int): Boolean {
+    override fun removerPorId(idTarefa: Int): Boolean {
         val args = arrayOf(idTarefa.toString())
         try {
             escrita.delete(
@@ -71,29 +70,33 @@ class TarefaDAO(context: Context) : ITarefaDAO {
 
     }
 
+    @SuppressLint("Recycle")
     override fun listar(): List<Tarefa> {
 
         val listaTarefas = mutableListOf<Tarefa>()
 
-        val sql = "SELECT ${DatabaseHelper.COLUNA_ID_TAREFA}, " +
+        val sql ="SELECT ${DatabaseHelper.COLUNA_ID_TAREFA}, " +
                 "${DatabaseHelper.COLUNA_DESCRICAO}, " +
-                "    strftime('%d/%m/%Y %H:%M', ${DatabaseHelper.COLUNA_DATA_CADASTRO}, '-3 hours') AS ${DatabaseHelper.COLUNA_DATA_CADASTRO} " +
-                "FROM ${DatabaseHelper.NOME_TABELA_TAREFAS}"
+                "strftime('%d/%m/%Y %H:%M', ${DatabaseHelper.COLUNA_DATA_CADASTRO}, '-3 hours') AS ${DatabaseHelper.COLUNA_DATA_CADASTRO}, " +
+                "${DatabaseHelper.COLUNA_PRIORIDADE} " +
+                "FROM ${DatabaseHelper.NOME_TABELA_TAREFAS};"
 
         val cursor = leitura.rawQuery(sql, null)
 
         val indiceId = cursor.getColumnIndex( DatabaseHelper.COLUNA_ID_TAREFA )
         val indiceDescricao = cursor.getColumnIndex( DatabaseHelper.COLUNA_DESCRICAO )
         val indiceData = cursor.getColumnIndex( DatabaseHelper.COLUNA_DATA_CADASTRO )
+        val indicePrioridade = cursor.getColumnIndex( DatabaseHelper.COLUNA_PRIORIDADE )
 
         while ( cursor.moveToNext() ){
-            //val checkBox = cursor.getInt(checkBox)
+
             val idTarefa = cursor.getInt( indiceId )
             val descricao = cursor.getString( indiceDescricao )
             val data = cursor.getString( indiceData )
+            val prioridade = cursor.getString( indicePrioridade )
 
             listaTarefas.add(
-                Tarefa(idTarefa, descricao, data)
+                Tarefa(idTarefa, descricao, data, prioridade)
             )
 
         }

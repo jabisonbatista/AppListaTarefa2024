@@ -1,10 +1,13 @@
 package com.example.applistatarefa2024
 
+
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.applistatarefa2024.database.TarefaDAO
 import com.example.applistatarefa2024.databinding.ActivityAdicionarTarefaBinding
+
 import com.example.applistatarefa2024.model.Tarefa
 
 class AdicionarTarefaActivity : AppCompatActivity() {
@@ -17,38 +20,32 @@ class AdicionarTarefaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        with(binding){
-            btnSalvar.setOnClickListener {
-
-            }
-            //checkBox()
-
-        }
-
-
         //recuperar tarefa passada
         var tarefa: Tarefa? = null
         val bundle = intent.extras
-        if(bundle != null){
-           tarefa = bundle.getSerializable("tarefa") as Tarefa
+        if (bundle != null) {
+            tarefa = bundle.getSerializable("tarefa") as Tarefa
             binding.editTarefa.setText(tarefa.descricao)
 
-        }else{
+        } else {
 
         }
 
         binding.btnSalvar.setOnClickListener {
 
-            if ( binding.editTarefa.text.isNotEmpty() ){
+            if (binding.editTarefa.text.isNotEmpty()) {
 
-                if (tarefa != null){
-                        editar(tarefa)
-                }else{
+                if (tarefa != null) {
+                    editar(tarefa)
+                    //NivelPrioridade(tarefa)
+
+                } else {
                     salvar()
-                    checkBox()
+
+
                 }
 
-            }else{
+            } else {
                 Toast.makeText(
                     this,
                     "Preencha uma tarefa",
@@ -60,22 +57,22 @@ class AdicionarTarefaActivity : AppCompatActivity() {
 
     }
 
-    private fun checkBox() {
-        val selecionadoBaixo = binding.checkBaixo.isChecked
-        binding.checkBaixo.text = "prioridade baixa $selecionadoBaixo"
 
-    }
 
     private fun editar(tarefa: Tarefa) {
+        //Esta linha obtém o texto do campo de edição (editTarefa) e armazena na variável descricao.
         val descricao = binding.editTarefa.text.toString()
-        //val checkBox = binding.txtResultado.text.toString()
+//Criando uma nova instância de Tarefa: idTarefa: O mesmo ID da tarefa original.
+//descricao: A nova descrição obtida do campo de edição.
+//"default": Um valor padrão (presumo que seja para algum campo que não está sendo editado neste momento).
+//prioridade: A mesma prioridade da tarefa original.
         val tarefaAtualizar = Tarefa(
-            tarefa.idTarefa,
-            descricao,
-            "default")
+            tarefa.idTarefa, descricao, "default", tarefa.prioridade
+        )
+
         val tarefaDAO = TarefaDAO(this)
 
-        if( tarefaDAO.atualizar(tarefaAtualizar)){
+        if (tarefaDAO.atualizar(tarefaAtualizar)) {
             Toast.makeText(
                 this,
                 "Tarefa atualizada com sucesso",
@@ -86,24 +83,37 @@ class AdicionarTarefaActivity : AppCompatActivity() {
 
     }
 
-    private fun salvar() {
-        val descricao = binding.editTarefa.text.toString()
-        //val checkBox = binding.txtResultado.text.toString()
 
-        val tarefa = Tarefa(
-            -1, descricao, "default"
-        )
+        private fun salvar() {
+            val descricao = binding.editTarefa.text.toString()
+            var prioridade = ""
+            val checkBaixo = binding.checkBoxBaixo
+            val checkMedio = binding.checkBoxMedio
+            val checkAlto = binding.checkBoxAlto
 
+            if(checkBaixo.isChecked){
+                prioridade = "baixa"
+            }
+            if(checkMedio.isChecked){
+                prioridade = "media"
+            }
+            if(checkAlto.isChecked){
+                prioridade = "alta"
+            }
 
-        val tarefaDAO = TarefaDAO(this)
-        if (tarefaDAO.salvar(tarefa)) {
-            Toast.makeText(
-                this,
-                "Tarefa cadastrada com sucesso",
-                Toast.LENGTH_SHORT
-            ).show()
-            finish()
+            val tarefa = Tarefa(
+                -1, descricao, "default", prioridade
+            )
+
+            val tarefaDAO = TarefaDAO(this)
+            if (tarefaDAO.salvar(tarefa)) {
+                Toast.makeText(
+                    this,
+                    "Tarefa cadastrada com sucesso",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
         }
-    }
 
-}
+    }
