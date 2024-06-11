@@ -1,16 +1,10 @@
 package com.example.applistatarefa2024
 
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
-import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.TextView
-import android.widget.Toast
 
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applistatarefa2024.adapter.TarefaAdapter
@@ -25,32 +19,29 @@ class MainActivity : AppCompatActivity() {
     }
     private var listaTarefas = emptyList<Tarefa>()
     private var tarefaAdapter: TarefaAdapter? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
 
 
         binding.fabAdicionar.setOnClickListener {
             val intent = Intent(this, AdicionarTarefaActivity::class.java)
             startActivity( intent )
         }
-
         //Recyclerview
         tarefaAdapter = TarefaAdapter(
             {
-                id-> confirmarExclusao(id) },
+                    id-> confirmarExclusao(id) },
             {
-                tarefa -> editar(tarefa)
+                    tarefa -> editar(tarefa)
             }
         )
         binding.rvTarefas.adapter = tarefaAdapter
 
         binding.rvTarefas.layoutManager = LinearLayoutManager(this)
 
-
     }
-
     private fun editar(tarefa: Tarefa) {
         val intent = Intent(this, AdicionarTarefaActivity::class.java )
         intent.putExtra("tarefa", tarefa)
@@ -67,21 +58,17 @@ class MainActivity : AppCompatActivity() {
         alertBuilder.setPositiveButton("sim"){_,_ ->
 
             val tarefaDAO = TarefaDAO(this)
-           if(tarefaDAO.removerPorId(id)){
-               atualizarListaTarefas()
-               Toast.makeText(this,"Sucesso ao remover tarefa", Toast.LENGTH_LONG).show()
+            if(tarefaDAO.removerPorId(id)){
+                atualizarListaTarefas()
+                Toast.makeText(this,"Sucesso ao remover tarefa", Toast.LENGTH_LONG).show()
 
-           }else{
+            }else{
 
-               Toast.makeText(this,"Erro ao remover tarefa", Toast.LENGTH_LONG).show()
-
-           }
-
+                Toast.makeText(this,"Erro ao remover tarefa", Toast.LENGTH_LONG).show()
+            }
         }
         alertBuilder.setNegativeButton("não"){ _,_ ->
-
         }
-
         alertBuilder.create().show()
     }
 
@@ -90,12 +77,9 @@ class MainActivity : AppCompatActivity() {
         val tarefaDAO = TarefaDAO(this)
         listaTarefas = tarefaDAO.listar()
         tarefaAdapter?.adicionarLista( listaTarefas )
-
     }
-
     override fun onStart() {
         super.onStart()
         atualizarListaTarefas()
     }
-
 }

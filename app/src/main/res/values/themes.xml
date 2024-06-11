@@ -16,4 +16,8 @@
     </style>
 
     <style name="Theme.AppListaTarefa2024" parent="Base.Theme.AppListaTarefa2024" />
+
+    <style name="CaixaTexto" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:textColor">@color/secundaria_variacao</item>
+    </style>
 </resources>

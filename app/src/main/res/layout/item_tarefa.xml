@@ -10,8 +10,8 @@
         android:id="@+id/textDescricao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ir ao mercado"
 
+        android:text="Ir ao mercado"
         android:textColor="#000000"
         android:textColorHighlight="#000000"
         android:textSize="20sp"
@@ -19,50 +19,68 @@
         app:layout_constraintBottom_toTopOf="@+id/textData"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/textData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="20/10/2022"
-        android:textColor="#000000"
-        android:textColorHighlight="#000000"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDescricao" />
 
     <ImageButton
         android:id="@+id/btnExcluir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:background="@drawable/rect_position_circulo"
         android:contentDescription="excluir"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_excluir_24" />
+
+    <TextView
+        android:id="@+id/textPrioridade"
+        android:layout_width="77dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rect_position_prioridade"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/btnEditar"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditar" />
 
     <ImageButton
         android:id="@+id/btnEditar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:background="@drawable/rect_position_circulo"
         android:contentDescription="editar"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnExcluir"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_editar_24" />
 
     <TextView
-        android:id="@+id/textPrioridade"
-        android:layout_width="95dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditar" />
+        android:id="@+id/textViewDescricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Descricao"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="@+id/textDescricao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDescricao" />
+
+    <TextView
+        android:id="@+id/textData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="20/10/2022"
+        android:textColor="#000000"
+        android:textColorHighlight="#000000"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/textDescricao"
+        app:layout_constraintTop_toBottomOf="@+id/textPrioridade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

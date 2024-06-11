@@ -1,7 +1,5 @@
 package com.example.applistatarefa2024
 
-
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +14,11 @@ class AdicionarTarefaActivity : AppCompatActivity() {
         ActivityAdicionarTarefaBinding.inflate(layoutInflater)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
 
         //recuperar tarefa passada
         var tarefa: Tarefa? = null
@@ -26,8 +26,6 @@ class AdicionarTarefaActivity : AppCompatActivity() {
         if (bundle != null) {
             tarefa = bundle.getSerializable("tarefa") as Tarefa
             binding.editTarefa.setText(tarefa.descricao)
-
-        } else {
 
         }
 
@@ -38,11 +36,8 @@ class AdicionarTarefaActivity : AppCompatActivity() {
                 if (tarefa != null) {
                     editar(tarefa)
                     //NivelPrioridade(tarefa)
-
                 } else {
                     salvar()
-
-
                 }
 
             } else {
@@ -52,22 +47,17 @@ class AdicionarTarefaActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
-
-    }
-
-
-
-    private fun editar(tarefa: Tarefa) {
+    }private fun editar(tarefa: Tarefa) {
         //Esta linha obtém o texto do campo de edição (editTarefa) e armazena na variável descricao.
         val descricao = binding.editTarefa.text.toString()
+        val descricaoTarefa = binding.editDescricao.text.toString()
 //Criando uma nova instância de Tarefa: idTarefa: O mesmo ID da tarefa original.
 //descricao: A nova descrição obtida do campo de edição.
 //"default": Um valor padrão (presumo que seja para algum campo que não está sendo editado neste momento).
 //prioridade: A mesma prioridade da tarefa original.
         val tarefaAtualizar = Tarefa(
-            tarefa.idTarefa, descricao, "default", tarefa.prioridade
+            tarefa.idTarefa, descricao, "default", tarefa.prioridade, descricaoTarefa
         )
 
         val tarefaDAO = TarefaDAO(this)
@@ -82,10 +72,9 @@ class AdicionarTarefaActivity : AppCompatActivity() {
         }
 
     }
-
-
-        private fun salvar() {
+    private fun salvar() {
             val descricao = binding.editTarefa.text.toString()
+            val descricaoTarefa = binding.editDescricao.text.toString()
             var prioridade = ""
             val checkBaixo = binding.checkBoxBaixo
             val checkMedio = binding.checkBoxMedio
@@ -93,16 +82,32 @@ class AdicionarTarefaActivity : AppCompatActivity() {
 
             if(checkBaixo.isChecked){
                 prioridade = "baixa"
+                Toast.makeText(
+                    this,
+                    "Prioridade baixa selecionado",
+                    Toast.LENGTH_SHORT
+                ).show()
+
             }
             if(checkMedio.isChecked){
-                prioridade = "media"
+                prioridade = "Media"
+                Toast.makeText(
+                    this,
+                    "Prioridade Média selecionado",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             if(checkAlto.isChecked){
                 prioridade = "alta"
+                Toast.makeText(
+                    this,
+                    "Prioridade Alta selecionado",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             val tarefa = Tarefa(
-                -1, descricao, "default", prioridade
+                -1, descricao, "default", prioridade, descricaoTarefa
             )
 
             val tarefaDAO = TarefaDAO(this)
@@ -115,5 +120,4 @@ class AdicionarTarefaActivity : AppCompatActivity() {
                 finish()
             }
         }
-
     }

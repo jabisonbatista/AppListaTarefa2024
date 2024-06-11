@@ -17,18 +17,16 @@ import com.example.applistatarefa2024.model.Tarefa
 // e a interface do usuário
 class TarefaAdapter(
     val onClickExcluir: (Int)-> Unit,
-    val onClickEditar: (Tarefa)-> Unit
-
+    val onClickEditar: (Tarefa)-> Unit,
 
 ) : RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
-    private var listaTarefas: List<Tarefa> = emptyList()
 
+    private var listaTarefas: List<Tarefa> = emptyList()
     @SuppressLint("NotifyDataSetChanged")
     fun adicionarLista(lista: List<Tarefa> ){
         this.listaTarefas = lista
         notifyDataSetChanged()
     }
-
     inner class TarefaViewHolder(itemBinding: ItemTarefaBinding)
         : RecyclerView.ViewHolder(itemBinding.root) {
 
@@ -43,10 +41,11 @@ class TarefaAdapter(
      @SuppressLint("ResourceType")
      fun bind(tarefa: Tarefa ){
             binding.textDescricao.text = tarefa.descricao
-
             binding.textData.text = tarefa.dataCadastro
+            binding.textViewDescricao.text = tarefa.descricaoDaTarefa
+
          binding.btnExcluir.setOnClickListener{
-             tarefa.idTarefa?.let { it1 -> onClickExcluir(it1) }
+                tarefa.idTarefa?.let { it1 -> onClickExcluir(it1) }
          }
          binding.btnEditar.setOnClickListener {
              onClickEditar(tarefa)
@@ -55,7 +54,7 @@ class TarefaAdapter(
             if(tarefa.prioridade == "baixa"){
                 binding.textPrioridade.setBackgroundColor(Color.GREEN)
             }
-            if(tarefa.prioridade == "media"){
+            if(tarefa.prioridade == "Media"){
                 binding.textPrioridade.setBackgroundColor(Color.YELLOW)
             }
             if(tarefa.prioridade == "alta"){

@@ -22,6 +22,7 @@ class  DatabaseHelper(context: Context): SQLiteOpenHelper(
         const val COLUNA_DESCRICAO = "cadastro"
         const val COLUNA_DATA_CADASTRO = "data_cadastro"
         const val COLUNA_PRIORIDADE = "prioridade"
+        const val COLUNA_DESCRICAODATAREFA = "descricao_tarefa"
     }
 
     //vamos criar as tabelas
@@ -31,7 +32,8 @@ class  DatabaseHelper(context: Context): SQLiteOpenHelper(
                 "$COLUNA_ID_TAREFA INTEGER not null PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUNA_DESCRICAO VARCHAR (80), " +
                 "$COLUNA_PRIORIDADE TEXT, " +
-                "$COLUNA_DATA_CADASTRO  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP" +
+                "$COLUNA_DATA_CADASTRO  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
+                "$COLUNA_DESCRICAODATAREFA TEXT " +
                 ");"
         try {
             db?.execSQL(sql)

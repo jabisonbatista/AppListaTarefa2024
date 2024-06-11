@@ -15,6 +15,7 @@ class TarefaDAO(context: Context) : ITarefaDAO {
         val conteudos = ContentValues()
         conteudos.put(DatabaseHelper.COLUNA_DESCRICAO, tarefa.descricao)
         conteudos.put(DatabaseHelper.COLUNA_PRIORIDADE, tarefa.prioridade)
+        conteudos.put(DatabaseHelper.COLUNA_DESCRICAODATAREFA, tarefa.descricaoDaTarefa)
 
         try {
             escrita.insert(
@@ -35,7 +36,7 @@ class TarefaDAO(context: Context) : ITarefaDAO {
     override fun atualizar(tarefa: Tarefa): Boolean {
         val args = arrayOf(tarefa.idTarefa.toString())
         val conteudo = ContentValues()
-        conteudo.put("${DatabaseHelper.COLUNA_DESCRICAO}, ${DatabaseHelper.COLUNA_PRIORIDADE}", tarefa.descricao )
+        conteudo.put("${DatabaseHelper.COLUNA_DESCRICAO}, ${DatabaseHelper.COLUNA_PRIORIDADE}, ${DatabaseHelper.COLUNA_DESCRICAODATAREFA}", tarefa.descricao)
 
         try {
             escrita.update(
@@ -43,10 +44,10 @@ class TarefaDAO(context: Context) : ITarefaDAO {
                 conteudo, "${DatabaseHelper.COLUNA_ID_TAREFA} = ?",
                 args
             )
-            Log.i("info_db", "Sucesso ao Remover")
+            Log.i("info_db", "Sucesso ao Atualizar")
         }catch (e: Exception){
             e.printStackTrace()
-            Log.i("info_db", "Erro ao Remover")
+            Log.i("info_db", "Erro ao Atualizar")
             return false
         }
 
@@ -75,18 +76,21 @@ class TarefaDAO(context: Context) : ITarefaDAO {
 
         val listaTarefas = mutableListOf<Tarefa>()
 
-        val sql ="SELECT ${DatabaseHelper.COLUNA_ID_TAREFA}, " +
-                "${DatabaseHelper.COLUNA_DESCRICAO}, " +
-                "strftime('%d/%m/%Y %H:%M', ${DatabaseHelper.COLUNA_DATA_CADASTRO}, '-3 hours') AS ${DatabaseHelper.COLUNA_DATA_CADASTRO}, " +
-                "${DatabaseHelper.COLUNA_PRIORIDADE} " +
-                "FROM ${DatabaseHelper.NOME_TABELA_TAREFAS};"
-
+        val sql = """
+    SELECT ${DatabaseHelper.COLUNA_ID_TAREFA},
+           ${DatabaseHelper.COLUNA_DESCRICAO},
+           strftime('%d/%m/%Y %H:%M', ${DatabaseHelper.COLUNA_DATA_CADASTRO}, '-3 hours') AS ${DatabaseHelper.COLUNA_DATA_CADASTRO},
+           ${DatabaseHelper.COLUNA_PRIORIDADE},
+           ${DatabaseHelper.COLUNA_DESCRICAODATAREFA}
+    FROM ${DatabaseHelper.NOME_TABELA_TAREFAS}
+"""
         val cursor = leitura.rawQuery(sql, null)
 
         val indiceId = cursor.getColumnIndex( DatabaseHelper.COLUNA_ID_TAREFA )
         val indiceDescricao = cursor.getColumnIndex( DatabaseHelper.COLUNA_DESCRICAO )
         val indiceData = cursor.getColumnIndex( DatabaseHelper.COLUNA_DATA_CADASTRO )
         val indicePrioridade = cursor.getColumnIndex( DatabaseHelper.COLUNA_PRIORIDADE )
+        val indiceDescricaoTarefa = cursor.getColumnIndex( DatabaseHelper.COLUNA_DESCRICAODATAREFA )
 
         while ( cursor.moveToNext() ){
 
@@ -94,9 +98,10 @@ class TarefaDAO(context: Context) : ITarefaDAO {
             val descricao = cursor.getString( indiceDescricao )
             val data = cursor.getString( indiceData )
             val prioridade = cursor.getString( indicePrioridade )
+            val descricaoTarefa = cursor.getString( indiceDescricaoTarefa )
 
             listaTarefas.add(
-                Tarefa(idTarefa, descricao, data, prioridade)
+                Tarefa(idTarefa, descricao, data, prioridade, descricaoTarefa)
             )
 
         }
